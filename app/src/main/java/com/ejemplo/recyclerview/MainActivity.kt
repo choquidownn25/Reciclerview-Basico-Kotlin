@@ -1,15 +1,18 @@
 package com.ejemplo.recyclerview
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ejemplo.recyclerview.adapter.CustomAdapter
 import com.ejemplo.recyclerview.models.User
+import com.ejemplo.recyclerview.utilidades.CellClickListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , CellClickListener {
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +35,16 @@ class MainActivity : AppCompatActivity() {
         users.add(User("Yashar Khan", "Ranchi Jharkhand","https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"))
 
         //Creando nuestro adaptador
-        val adapter = CustomAdapter(users)
+        val adapter = CustomAdapter(this, users, this)
 
         //Ahora agregando el adaptador a la vista de reciclaje
         recyclerView.adapter = adapter
+    }
+
+    override fun onCellClickListener() {
+        Toast.makeText(this,"Cell clicked", Toast.LENGTH_LONG).show()
+        val intent = Intent(this, SegundoActivity::class.java)
+        // start your next activity
+        startActivity(intent)
     }
 }
